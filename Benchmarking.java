@@ -9,7 +9,7 @@ public class Benchmarking {
 	//Name: Stephen Graham
 	//CptS 233: Programming Assignment #1
 	//Date: 9/17/20
-	//git rep url:
+	//git rep url: https://github.com/SGrahambo/Benchmarking.git
 	//*
 	
 	public static void main(String[] args) throws InterruptedException{
