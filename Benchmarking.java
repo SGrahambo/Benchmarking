@@ -5,7 +5,12 @@ import java.io.*;
 
 public class Benchmarking {
 	
-	
+	//*	
+	//Name: Stephen Graham
+	//CptS 233: Programming Assignment #1
+	//Date: 9/17/20
+	//git rep url:
+	//*
 	
 	public static void main(String[] args) throws InterruptedException{
 		
@@ -37,84 +42,117 @@ public class Benchmarking {
 		try {
 		File file = new File(fileName);
 		Scanner readFile = new Scanner(file);
-		int line = readFile.nextInt();
 		
 		//create Linked List and index counter
 		
 		LinkedList<Integer> list = new LinkedList<Integer>();
-		int index = 0;
+		int index = -1;
 		
 		
-		//add items from file to list
+		//add and sort items from file to list
 		
 		long listCreationStart = System.nanoTime();
 		while (readFile.hasNextInt()) {
 			int n = readFile.nextInt();
-			list.add(n);
-			index++;
+			int s = index;
+			int l = 0;
+
+			if (index < 0){
+				list.add(0, n);
+				index++;
+				System.out.println(n);
+			}
+					
+			//stops while loop when element added to index
+			while (s == index){
+				if (n <= list.get(l)){
+					list.add(l, n);
+					index++;
+					System.out.println(n);
+				} else if (l == index){
+					list.add(n);
+					index++;
+					System.out.println(n);
+				}
+					l++;				
+			}
 		}
 		long listCreationFinish = System.nanoTime();
 		readFile.close();
 		
-		//get max value in list
-		
-		int max = 0;
-		int value;
+			//get max value in list
 		long maxTimeStart = System.nanoTime();
-		for (int count = 0; count < index; count++){
-			value = list.get(count);
-			if (count == 0 || max < value){
-				max = value;
-			}	
-			
-		}
-			long maxTimeFinish = System.nanoTime();
+		int max = list.get(index);
+		long maxTimeFinish = System.nanoTime();
 			
 			
 			//get min value from list
+		long minTimeStart = System.nanoTime();	
+		int min = list.get(0);
+		long minTimeFinish = System.nanoTime();
 			
-		int min = 0;
-		long minTimeStart = System.nanoTime();
-		for (int count = 0; count < index; count++){
-			value = list.get(count);
-			if (count == 0 || min > value){
-				min = value;
-			}	
-		}
-			long minTimeFinish = System.nanoTime();
-			
-			// Get the median value from list
-			
-		int totalValue = 0;
+			// Get the median value from list			
 		long medTimeStart = System.nanoTime();
-		for (int count = 0; count < index; count++){
-			value = list.get(count);
-			totalValue = totalValue + value;
-			}
-		int median = totalValue/(index + 1);
+		int median = list.get(index/2);
 		long medTimeFinish = System.nanoTime();
 		
 		
-		//calculate times time in nanoseconds
-		
-		long listCreationTime = (listCreationFinish - listCreationStart);
-		long maxTime = (maxTimeFinish - maxTimeStart);
-		long minTime = (minTimeFinish - minTimeStart);
-		long medTime = (medTimeFinish - medTimeStart);
-			
-		
-		//Print results
-		
 		System.out.println("The total number of items are: " + (index + 1));
-		System.out.println("List creation time: " + listCreationTime + " nanoseconds");
 		System.out.println("The max value is: " + max);
-		System.out.println("The max value was calculated in " + maxTime + " nanoseconds");
 		System.out.println("The min value is: " + min);
-		System.out.println("The min value was calculated in " + minTime + " nanoseconds");
-		System.out.println("The sum of the values is: " + totalValue);
 		System.out.println("The median of the values is: " + median);
-		System.out.println("The median value was calculated in " + medTime + " nanoseconds");
 		
+		//calculate times and display
+		String sp = "microseconds";
+		long listCreationTime = (listCreationFinish - listCreationStart)/1000;
+		if (listCreationTime > 1000){
+			listCreationTime = listCreationTime/1000;
+			sp = "milliseconds";
+		}
+		if (listCreationTime > 1000){
+			listCreationTime = listCreationTime/1000;
+			sp = "seconds";
+		}
+		System.out.println("List creation time: " + listCreationTime + " " + sp);
+		
+		
+		sp = "microseconds";
+		long maxTime = (maxTimeFinish - maxTimeStart)/1000;
+		if (maxTime > 1000){
+			maxTime = maxTime/1000;
+			sp = "milliseconds";
+		}
+		if (maxTime > 1000){
+			maxTime = maxTime/1000;
+			sp = "seconds";
+		}
+		System.out.println("The max value was calculated in " + maxTime + " " + sp);
+
+
+		sp = "microseconds";
+		long minTime = (minTimeFinish - minTimeStart)/1000;
+		if (minTime > 1000){
+			minTime = minTime/1000;
+			sp = "milliseconds";
+		}
+		if (minTime > 1000){
+			minTime = minTime/1000;
+			sp = "seconds";
+		}
+		System.out.println("The min value was calculated in " + minTime + " " + sp);
+		
+		
+		sp = "microseconds";
+		long medTime = (medTimeFinish - medTimeStart)/1000;
+		if (medTime > 1000){
+			medTime = medTime/1000;
+			sp = "milliseconds";
+		}
+		if (medTime > 1000){
+			medTime = medTime/1000;
+			sp = "seconds";
+		}
+		System.out.println("The median value was calculated in " + medTime + " " + sp);
 		}
 		
 		
